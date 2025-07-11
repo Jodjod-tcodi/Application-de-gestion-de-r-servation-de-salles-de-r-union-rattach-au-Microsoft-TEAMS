@@ -52,7 +52,7 @@ public class UserService {
         LocalTime startTime = start.toLocalTime();
         LocalTime endTime = end.toLocalTime();
 
-        // Use custom query to check for conflicts
+
         List<Reservation> conflictingReservations = reservationRepository.findConflictingReservations(roomId, date, startTime, endTime);
         if (!conflictingReservations.isEmpty()) {
             throw new IllegalStateException("Room is already booked during this time.");
@@ -80,7 +80,7 @@ public class UserService {
     public List<MeetingRoom> getAvailableRooms(LocalDate date, LocalTime start, LocalTime end) {
         List<MeetingRoom> allRooms = meetingRoomRepository.findAll();
 
-        // Use the fixed query method here
+
         return allRooms.stream()
                 .filter(room -> {
                     List<Reservation> conflicts = reservationRepository.findConflictingReservations(

@@ -16,7 +16,7 @@ public class UserConfig {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            if (userRepository.count() == 0) {  // only insert if DB empty
+            if (userRepository.count() == 0) {
                 AppUser aya = new AppUser("aya", "ayahachana2023@gmail.com", passwordEncoder.encode("mypassword"), "Admin");
                 AppUser yasmine = new AppUser("yasmine", "yasminejedidi03@gmail.com", passwordEncoder.encode("herpassword"), "Admin");
                 AppUser louay = new AppUser("louay", "louay.zeidi@medtech.com", passwordEncoder.encode("hispassword"), "Admin");

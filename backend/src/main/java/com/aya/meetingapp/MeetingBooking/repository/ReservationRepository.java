@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    // Find reservations conflicting with given room, date and time interval (exclude canceled)
+
     @Query("SELECT r FROM Reservation r " +
             "WHERE r.meetingRoom.roomId = :roomId " +
             "AND r.date = :date " +
@@ -28,7 +28,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("startTime") LocalTime startTime,
             @Param("endTime") LocalTime endTime);
 
-    // Find all reservations by user ID
+
     @Query("SELECT r FROM Reservation r WHERE r.user.id = :userId")
     List<Reservation> findReservationsByUserId(@Param("userId") Long userId);
 

@@ -20,7 +20,7 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    // ✅ Create a reservation
+
     @PostMapping
     public Reservation createReservation(
             @RequestParam Long userId,
@@ -31,19 +31,19 @@ public class ReservationController {
         return reservationService.bookRoom(userId, roomId, start, end);
     }
 
-    // ✅ Cancel a reservation
+
     @DeleteMapping("/{reservationId}")
     public void cancelReservation(@PathVariable Long reservationId) {
         reservationService.cancelReservation(reservationId);
     }
 
-    // ✅ Get reservations for a user
+
     @GetMapping("/user/{userId}")
     public List<Reservation> getReservationsForUser(@PathVariable Long userId) {
         return reservationService.getUserReservations(userId);
     }
 
-    // ✅ Get reservations for a room
+
     @GetMapping("/room/{roomId}")
     public List<Reservation> getReservationsForRoom(@PathVariable Long roomId) {
         return reservationService.getRoomReservations(roomId);

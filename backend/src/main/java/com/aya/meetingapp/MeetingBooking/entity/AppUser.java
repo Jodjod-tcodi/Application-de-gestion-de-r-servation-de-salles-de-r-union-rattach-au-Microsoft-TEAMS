@@ -22,7 +22,7 @@ public class AppUser {
 
     private String username;
     private String email;
-    private String role;  // "USER" or "ADMIN"
+    private String role;  // USER or ADMIN
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,  orphanRemoval = true)
