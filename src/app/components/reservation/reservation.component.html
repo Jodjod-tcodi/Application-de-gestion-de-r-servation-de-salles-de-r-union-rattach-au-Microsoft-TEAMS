@@ -1,0 +1,18 @@
+<div class="reservation-page">
+  <h1 class="page-title">Your Reservations</h1>
+  <p class="page-subtitle">View and manage your booked meeting rooms.</p>
+
+  <mat-card class="reservation-card" *ngFor="let reservation of reservations">
+    <mat-card-title>{{ reservation.roomName }}</mat-card-title>
+    <mat-card-content>
+      Date: {{ reservation.date | date:'mediumDate' }}<br>
+      Time: {{ reservation.time }}<br>
+      Duration: {{ reservation.duration }} hour(s)
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="warn" (click)="cancelReservation(reservation.id)">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <p *ngIf="reservations.length === 0">You have no reservations yet.</p>
+</div>

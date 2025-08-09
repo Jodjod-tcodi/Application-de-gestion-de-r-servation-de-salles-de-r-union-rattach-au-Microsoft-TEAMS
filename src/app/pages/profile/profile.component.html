@@ -1,0 +1,16 @@
+<div class="profile-container">
+  <h1 class="profile-page-title">Your Profile</h1>
+
+  <div class="profile-info">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="user.name" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="user.email" disabled />
+    </mat-form-field>
+    <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+  </div>
+</div>
