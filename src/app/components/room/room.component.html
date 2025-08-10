@@ -1,0 +1,17 @@
+<div class="room-page">
+  <h1 class="room-title">Meeting Rooms</h1>
+  <p class="room-subtitle">Here you can view and reserve available meeting rooms.</p>
+
+  <div class="room-list">
+    <mat-card class="room-card" *ngFor="let room of rooms">
+      <mat-card-title>{{ room.name }}</mat-card-title>
+      <mat-card-content>
+        <p><strong>Capacity:</strong> {{ room.capacity }}</p>
+        <p><strong>Location:</strong> {{ room.location }}</p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary">Book Room</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

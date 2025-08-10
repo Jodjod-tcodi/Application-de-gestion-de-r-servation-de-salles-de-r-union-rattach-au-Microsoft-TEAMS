@@ -1,0 +1,88 @@
+<div class="page-wrapper">
+  <!-- Left Section: Logo and Login Card -->
+  <div class="left-section">
+    <img src="/assets/logo.png" alt="App_Logo" class="top-logo" />
+    <mat-card class="login-card" appearance="outlined">
+      <mat-card-title class="login-title">
+        Login into your teams account
+      </mat-card-title>
+
+      <mat-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              required
+              autocomplete="email"
+            />
+            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+              Enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              [type]="hidePassword ? 'password' : 'text'"
+              formControlName="password"
+              required
+              autocomplete="current-password"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              aria-label="Toggle password visibility"
+              (click)="hidePassword = !hidePassword"
+            >
+              <mat-icon>{{
+                hidePassword ? "visibility_off" : "visibility"
+              }}</mat-icon>
+            </button>
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="primary"
+            class="full-width login-button"
+            type="submit"
+            [disabled]="loginForm.invalid"
+          >
+            Login
+          </button>
+        </form>
+
+        <!-- Added Sign-up prompt -->
+        <div class="signup-prompt">
+          Don't have an account?
+          <a
+            href="https://signup.live.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Sign up</a
+          >
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Right Section: Full height image with slogan -->
+  <div class="right-section">
+    <img
+      src="/assets/login_image3.jpg"
+      alt="Decorative Image"
+      class="side-image"
+    />
+    <div class="slogan-overlay">Book your Teams room now</div>
+  </div>
+</div>
