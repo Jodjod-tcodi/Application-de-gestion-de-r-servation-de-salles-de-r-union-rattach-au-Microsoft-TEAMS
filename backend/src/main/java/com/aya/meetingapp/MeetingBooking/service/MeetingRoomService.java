@@ -1,46 +1,91 @@
-
 package com.aya.meetingapp.MeetingBooking.service;
 
+import com.aya.meetingapp.MeetingBooking.dto.MeetingRoomDto;
 import com.aya.meetingapp.MeetingBooking.entity.MeetingRoom;
+import com.aya.meetingapp.MeetingBooking.mapper.MeetingRoomMapper;
 import com.aya.meetingapp.MeetingBooking.repository.MeetingRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+
+
 
 @Service
 public class MeetingRoomService {
 
-    private final MeetingRoomRepository roomRepo;
+    private final MeetingRoomRepository meetingRoomRepo;
+    private final MeetingRoomMapper roomMapper;
 
     @Autowired
-    public MeetingRoomService(MeetingRoomRepository roomRepo) {
-        this.roomRepo = roomRepo;
+    public MeetingRoomService(MeetingRoomRepository meetingRoomRepo, MeetingRoomMapper roomMapper) {
+        this.meetingRoomRepo = meetingRoomRepo;
+        this.roomMapper = roomMapper;
     }
 
-    public List<MeetingRoom> getAllRooms() {
-        return roomRepo.findAll();
+    public List<MeetingRoomDto> getAllRooms() {
+        return meetingRoomRepo.findAll().stream()
+                .map(roomMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public MeetingRoom addRoom(MeetingRoom room) {
-        return roomRepo.save(room);
+    public MeetingRoomDto getRoomById(Long id) {
+        MeetingRoom room = meetingRoomRepo.findById(id).orElseThrow();
+        return roomMapper.toDto(room);
+    }
+    public MeetingRoomDto createRoom(MeetingRoomDto dto) {
+        MeetingRoom room = roomMapper.toEntity(dto);
+        MeetingRoom saved = meetingRoomRepo.save(room);
+        return roomMapper.toDto(saved);
     }
 
-    public Optional<MeetingRoom> getRoomById(Long id) {
-        return roomRepo.findById(id);
+    public MeetingRoomDto updateRoom(Long id, MeetingRoomDto dto) {
+        MeetingRoom room = meetingRoomRepo.findById(id).orElseThrow();
+        room.setRoomName(dto.getRoomName());
+        room.setCapacity(dto.getCapacity());
+        room.setRoomLocation(dto.getRoomLocation());
+        MeetingRoom updated = meetingRoomRepo.save(room);
+        return roomMapper.toDto(updated);
     }
 
-    public MeetingRoom updateRoom(Long id, MeetingRoom updatedRoom) {
-        return roomRepo.findById(id).map(room -> {
-            room.setRoomName(updatedRoom.getRoomName());
-            room.setRoomLocaion(updatedRoom.getRoomLocaion());
-            room.setCapacity(updatedRoom.getCapacity());
-            return roomRepo.save(room);
-        }).orElseThrow(() -> new IllegalArgumentException("Room not found"));
+    public Map<String, String> deleteRoom(Long id) {
+        MeetingRoom room = meetingRoomRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found"));
+
+        meetingRoomRepo.delete(room);
+
+        return Map.of("message", "Room deleted successfully");
     }
 
-    public void deleteRoom(Long id) {
-        roomRepo.deleteById(id);
+    // Search/filter rooms by capacity and/or location (both optional)
+    public List<MeetingRoomDto> searchRooms(Integer minCapacity, String locationContains) {
+        List<MeetingRoom> rooms;
+        if (minCapacity != null && locationContains != null && !locationContains.isBlank()) {
+            rooms = meetingRoomRepo.findByCapacityGreaterThanEqualAndRoomLocationContainingIgnoreCase(minCapacity, locationContains);
+        } else if (minCapacity != null) {
+            rooms = meetingRoomRepo.findByCapacityGreaterThanEqual(minCapacity);
+        } else if (locationContains != null && !locationContains.isBlank()) {
+            rooms = meetingRoomRepo.findByRoomLocationContainingIgnoreCase(locationContains);
+        } else {
+            rooms = meetingRoomRepo.findAll();
+        }
+        return rooms.stream().map(roomMapper::toDto).collect(Collectors.toList());
     }
+    // New method
+    public Page<MeetingRoomDto> getAllRoomsPaged(int page, int size, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return meetingRoomRepo.findAll(pageable).map(roomMapper::toDto);
+    }
+
 }

@@ -17,9 +17,9 @@ public class UserConfig {
     CommandLineRunner commandLineRunner(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             if (userRepository.count() == 0) {
-                AppUser aya = new AppUser("aya", "ayahachana2023@gmail.com", passwordEncoder.encode("mypassword"), "Admin");
-                AppUser yasmine = new AppUser("yasmine", "yasminejedidi03@gmail.com", passwordEncoder.encode("herpassword"), "Admin");
-                AppUser louay = new AppUser("louay", "louay.zeidi@medtech.com", passwordEncoder.encode("hispassword"), "Admin");
+                AppUser aya = new AppUser("aya", "ayahachana2023@gmail.com", passwordEncoder.encode("mypassword"), "ADMIN");
+                AppUser yasmine = new AppUser("yasmine", "yasminejedidi03@gmail.com", passwordEncoder.encode("herpassword"), "ADMIN");
+                AppUser louay = new AppUser("louay", "louay.zeidi@medtech.com", passwordEncoder.encode("hispassword"), "USER");
                 userRepository.saveAll(List.of(aya, yasmine, louay));
             }
         };

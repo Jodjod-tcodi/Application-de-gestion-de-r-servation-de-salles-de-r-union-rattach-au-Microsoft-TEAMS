@@ -20,7 +20,7 @@ public class MeetingRoom {
 
     private Long roomId;
     private String roomName;
-    private String roomLocaion; //which building and floor
+    private String roomLocation; //which building and floor
     private int capacity;
 
     @OneToMany(mappedBy ="meetingRoom", cascade= CascadeType.ALL , orphanRemoval = true)
@@ -29,16 +29,16 @@ public class MeetingRoom {
     public MeetingRoom() {
     }
 
-    public MeetingRoom(Long roomId, String roomName, String roomLocaion, int capacity) {
+    public MeetingRoom(Long roomId, String roomName, String roomLocation, int capacity) {
         this.roomId = roomId;
         this.roomName = roomName;
-        this.roomLocaion = roomLocaion;
+        this.roomLocation = roomLocation;
         this.capacity = capacity;
     }
 
-    public MeetingRoom(String roomName, String roomLocaion, int capacity) {
+    public MeetingRoom(String roomName, String roomLocation, int capacity) {
         this.roomName = roomName;
-        this.roomLocaion = roomLocaion;
+        this.roomLocation = roomLocation;
         this.capacity = capacity;
     }
 
@@ -58,12 +58,12 @@ public class MeetingRoom {
         this.roomName = roomName;
     }
 
-    public String getRoomLocaion() {
-        return roomLocaion;
+    public String getRoomLocation() {
+        return roomLocation;
     }
 
-    public void setRoomLocaion(String roomLocaion) {
-        this.roomLocaion = roomLocaion;
+    public void setRoomLocation(String roomLocation) {
+        this.roomLocation = roomLocation;
     }
 
     public int getCapacity() {
@@ -87,7 +87,7 @@ public class MeetingRoom {
         return "MeetingRoom{" +
                 "roomId=" + roomId +
                 ", roomName='" + roomName + '\'' +
-                ", roomLocaion='" + roomLocaion + '\'' +
+                ", roomLocation='" + roomLocation + '\'' +
                 ", capacity=" + capacity +
                 '}';
     }

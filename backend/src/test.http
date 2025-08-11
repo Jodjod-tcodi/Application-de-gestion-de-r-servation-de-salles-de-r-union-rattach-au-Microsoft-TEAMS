@@ -1,0 +1,98 @@
+### Login request to get JWT
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "yasmine",
+  "password": "herpassword"
+}
+### Access protected route with JWT
+GET http://localhost:8080/api/v1/rooms
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6Inlhc21pbmUiLCJpYXQiOjE3NTQ5MDM5NTMsImV4cCI6MTc1NDk5MDM1M30.Y8cqYWTMs1kDt7M_ysonIyANHkO2aha_GxvsGDDZpv4
+
+### Get all users
+GET http://localhost:8080/api/v1/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDg3NzgzNiwiZXhwIjoxNzU0OTY0MjM2fQ.nZgACDBQsQ8uJcKG3Y43kE65RIU-ogo_oUnsy2rHw-g
+
+
+### Get user by ID
+GET http://localhost:8080/api/v1/users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6Inlhc21pbmUiLCJpYXQiOjE3NTQ5MDM5NTMsImV4cCI6MTc1NDk5MDM1M30.Y8cqYWTMs1kDt7M_ysonIyANHkO2aha_GxvsGDDZpv4
+
+
+### Home endpoint
+GET http://localhost:8080/
+###
+
+### Get room by ID
+GET http://localhost:8080/api/v1/rooms/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDkwMTI0MSwiZXhwIjoxNzU0OTg3NjQxfQ.A4yOlfVerv4kOM0E365Emu9vNBalTzP5mlYMP7zJt9w
+
+### Create new room
+POST http://localhost:8080/api/v1/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDkwMTI0MSwiZXhwIjoxNzU0OTg3NjQxfQ.A4yOlfVerv4kOM0E365Emu9vNBalTzP5mlYMP7zJt9w
+
+{
+  "roomName": "Lake view",
+  "capacity": 100,
+  "roomLocation": "First Floor"
+}
+
+### Update room
+PUT http://localhost:8080/api/v1/rooms/55
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDkwMTI0MSwiZXhwIjoxNzU0OTg3NjQxfQ.A4yOlfVerv4kOM0E365Emu9vNBalTzP5mlYMP7zJt9w
+
+{
+
+  "roomName": "duplex room",
+  "capacity": 100,
+  "roomLocation": "First and Second Floor"
+
+
+}
+
+### Delete room
+DELETE http://localhost:8080/api/v1/rooms/55
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDkwMTI0MSwiZXhwIjoxNzU0OTg3NjQxfQ.A4yOlfVerv4kOM0E365Emu9vNBalTzP5mlYMP7zJt9w
+
+### Create reservation
+POST http://localhost:8080/api/v1/reservations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDg3NzgzNiwiZXhwIjoxNzU0OTY0MjM2fQ.nZgACDBQsQ8uJcKG3Y43kE65RIU-ogo_oUnsy2rHw-g
+
+{
+  "userId": 2,
+  "roomId": 3,
+  "startTime": "2025-08-02T10:00:00",
+  "endTime": "2025-08-02T11:00:00"
+}
+
+### Get reservations for user
+GET http://localhost:8080/api/v1/reservations/user/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDg3NzgzNiwiZXhwIjoxNzU0OTY0MjM2fQ.nZgACDBQsQ8uJcKG3Y43kE65RIU-ogo_oUnsy2rHw-g
+
+### Get reservations for room
+GET http://localhost:8080/api/v1/reservations/room/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDg3NzgzNiwiZXhwIjoxNzU0OTY0MjM2fQ.nZgACDBQsQ8uJcKG3Y43kE65RIU-ogo_oUnsy2rHw-g
+
+
+### Update reservation
+PUT http://localhost:8080/api/v1/reservations/52
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDg3NzgzNiwiZXhwIjoxNzU0OTY0MjM2fQ.nZgACDBQsQ8uJcKG3Y43kE65RIU-ogo_oUnsy2rHw-g
+
+{
+  "userId": 2,
+  "roomId": 3,
+  "startTime": "2025-08-02T12:00:00",
+  "endTime": "2025-08-02T13:00:00"
+}
+
+### Get all reservations
+GET http://localhost:8080/api/v1/reservations
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6ImF5YSIsImlhdCI6MTc1NDg3NzgzNiwiZXhwIjoxNzU0OTY0MjM2fQ.nZgACDBQsQ8uJcKG3Y43kE65RIU-ogo_oUnsy2rHw-g
+
+
+
